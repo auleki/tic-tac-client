@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import gameContext from '../../gameContext'
 import socketService from '../../services/socketService'
-import GameService from '../../services/socketService/gameService'
+import GameService from '../../services/gameService'
 import { Button, FormStyle, InputStyle } from '../StyledComponents'
 
 interface IJoinRoomProps {}

@@ -39,7 +39,7 @@ exports.__esModule = true;
 var react_1 = require("react");
 var gameContext_1 = require("../../gameContext");
 var socketService_1 = require("../../services/socketService");
-var gameService_1 = require("../../services/socketService/gameService");
+var gameService_1 = require("../../services/gameService");
 var StyledComponents_1 = require("../StyledComponents");
 function JoinRoom(props) {
     var _this = this;

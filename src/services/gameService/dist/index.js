@@ -53,6 +53,25 @@ var GameService = /** @class */ (function () {
             });
         });
     };
+    GameService.prototype.UpdateGame = function (socket, gameMatrix) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                socket.emit("update_game", { matrix: gameMatrix });
+                return [2 /*return*/];
+            });
+        });
+    };
+    GameService.prototype.OnGameUpdate = function (socket, listener) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                socket.on("on_game_update", function (_a) {
+                    var matrix = _a.matrix;
+                    return listener(matrix);
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
     return GameService;
 }());
 exports["default"] = new GameService();

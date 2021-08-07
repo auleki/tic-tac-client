@@ -1,5 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import gameContext from "../../gameContext";
+import gameService from "../../services/gameService";
+import socketService from "../../services/socketService";
 
 import { RowContainer, GameContainer, Cell, X, O } from "../StyledComponents";
 
@@ -21,8 +23,21 @@ export function Game () {
       newMatrix[row][column] = symbol
       setMatrix(newMatrix)
     }
+    if (socketService.socket) 
+      gameService.UpdateGame(socketService.socket, newMatrix)
   }
 
+  const handleGameUpdate = () => {
+    if(socketService.socket) 
+      gameService.OnGameUpdate(socketService.socket, (newMatrix) => {
+        setMatrix(newMatrix)
+      })
+  }
+
+  useEffect(() => {
+    handleGameUpdate()
+  }, [])
+  
   return (
     <GameContainer>
       {matrix.map((row, rowIdx) => {
