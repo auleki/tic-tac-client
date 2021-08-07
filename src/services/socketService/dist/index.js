@@ -15,6 +15,10 @@ var SocketService = /** @class */ (function () {
             _this.socket.on('connect', function () {
                 resolve(_this.socket);
             });
+            _this.socket.on('connect_error', function (err) {
+                console.log("connection error", err);
+                reject(err);
+            });
         });
     };
     return SocketService;

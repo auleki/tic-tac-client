@@ -14,6 +14,11 @@ class SocketService {
       this.socket.on('connect', () => {
         resolve(this.socket as Socket)
       })
+
+      this.socket.on('connect_error', (err) => {
+        console.log("connection error", err)
+        reject(err)
+      })
     })
 
   }

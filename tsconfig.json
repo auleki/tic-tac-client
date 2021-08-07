@@ -16,7 +16,8 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    /* Might switch to true when I figure the index.ts shit out  */  
+    "isolatedModules": false,
     "noEmit": true,
     "jsx": "react-jsx"
   },
