@@ -75,6 +75,7 @@ function JoinRoom(props) {
         setRoomId(id);
     };
     return (react_1["default"].createElement(StyledComponents_1.FormStyle, { onSubmit: toJoinRoom },
+        react_1["default"].createElement("h2", null, "Which game room do you want to join?"),
         react_1["default"].createElement(StyledComponents_1.InputStyle, { type: "text", placeholder: "Room ID", onChange: handleId, value: roomId }),
         react_1["default"].createElement(StyledComponents_1.Button, { disabled: isJoining }, isJoining ? "Joining room..." : "Join Room")));
 }

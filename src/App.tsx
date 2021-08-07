@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import JoinRoom from './components/JoinRoom';
 import { AppContainer } from './components/StyledComponents'
 import GameContext, { IGameContextProps } from './gameContext';
+import { Game } from './components/Game';
 import socketService from './services/socketService';
 
 function App() {
   const [isInRoom, setIsInRoom] = useState(false)
+  const [playerSymbol, setPlayerSymbol] = useState<"x" | "o">("o")
 
   const connectSocket = async () => {
     // eslint-disable-next-line
@@ -18,14 +20,16 @@ function App() {
 
   const gameContextValue: IGameContextProps = {
     isInRoom,
-    setIsInRoom
+    setIsInRoom,
+    playerSymbol,
+    setPlayerSymbol
   }
   
   return (
     <GameContext.Provider value={gameContextValue}>
     <AppContainer>
       <h1>Tic Tac Toe - Fuckers</h1>
-      <JoinRoom />
+      {isInRoom ? <Game /> : <JoinRoom />}
     </AppContainer>
     </GameContext.Provider>
   );

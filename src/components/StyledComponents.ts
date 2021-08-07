@@ -39,6 +39,11 @@ export const FormStyle = styled.form(
   display: flex;
   flex-direction: column;
   padding: 1rem;
+
+  h2 {
+    font-weight: 400;
+    margin-bottom: 1rem;
+  }
  `
 )
 
@@ -90,6 +95,7 @@ export const Button = styled.button(
 
 export const GameContainer = styled.div`
   display: flex;
+  margin-top: 5rem;
   flex-direction: column;
   font-family: "Zen Tokyo Zoo", cursive;
   position: relative;
@@ -108,10 +114,10 @@ export const Cell = styled.div<ICellProps>`
   justify-content: center;
   border-radius: 20px;
   cursor: pointer;
-  border-top: ${({ borderTop }) => borderTop && "3px solid #8e44ad"};
-  border-left: ${({ borderLeft }) => borderLeft && "3px solid #8e44ad"};
-  border-bottom: ${({ borderBottom }) => borderBottom && "3px solid #8e44ad"};
-  border-right: ${({ borderRight }) => borderRight && "3px solid #8e44ad"};
+  border-top: ${({ borderTop }) => borderTop && "3px solid #1B1B1B"};
+  border-left: ${({ borderLeft }) => borderLeft && "3px solid #1B1B1B"};
+  border-bottom: ${({ borderBottom }) => borderBottom && "3px solid #1B1B1B"};
+  border-right: ${({ borderRight }) => borderRight && "3px solid #1B1B1B"};
   transition: all 270ms ease-in-out;
   &:hover {
     background-color: #8d44ad28;
@@ -130,7 +136,7 @@ export const PlayStopper = styled.div`
 
 export const X = styled.span`
   font-size: 100px;
-  color: #8e44ad;
+  color: #901DC2;
   &::after {
     content: "X";
   }
@@ -138,7 +144,7 @@ export const X = styled.span`
 
 export const O = styled.span`
   font-size: 100px;
-  color: #8e44ad;
+  color: #44FF5D;
   &::after {
     content: "O";
   }

@@ -35,6 +35,7 @@ export default function JoinRoom(props: IJoinRoomProps) {
 
   return (
     <FormStyle onSubmit={toJoinRoom}>
+      <h2>Which game room do you want to join?</h2>
       <InputStyle 
         type="text"  
         placeholder="Room ID" 
