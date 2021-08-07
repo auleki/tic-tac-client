@@ -36,35 +36,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var react_1 = require("react");
-var JoinRoom_1 = require("./components/JoinRoom");
-var StyledComponents_1 = require("./components/StyledComponents");
-var gameContext_1 = require("./gameContext");
-var socketService_1 = require("./services/socketService");
-function App() {
-    var _this = this;
-    var _a = react_1.useState(false), isInRoom = _a[0], setIsInRoom = _a[1];
-    var connectSocket = function () { return __awaiter(_this, void 0, void 0, function () {
-        var server;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, socketService_1["default"].connect("http://localhost:9000")["catch"](function (err) { return console.error(err); })];
-                case 1:
-                    server = _a.sent();
-                    return [2 /*return*/];
-            }
+var GameService = /** @class */ (function () {
+    function GameService() {
+    }
+    GameService.prototype.JoinGameRoom = function (socket, roomId) {
+        return __awaiter(this, void 0, Promise, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (rs, rj) {
+                        socket.emit("join_game", { roomId: roomId });
+                        socket.on("room_joined", function () { return rs(true); });
+                        socket.on("room_join_error", function (_a) {
+                            var error = _a.error;
+                            return rj(error);
+                        });
+                    })];
+            });
         });
-    }); };
-    react_1.useEffect(function () {
-        connectSocket();
-    }, []);
-    var gameContextValue = {
-        isInRoom: isInRoom,
-        setIsInRoom: setIsInRoom
     };
-    return (react_1["default"].createElement(gameContext_1["default"].Provider, { value: gameContextValue },
-        react_1["default"].createElement(StyledComponents_1.AppContainer, null,
-            react_1["default"].createElement("h1", null, "Tic Tac Toe - Fuckers"),
-            react_1["default"].createElement(JoinRoom_1["default"], null))));
-}
-exports["default"] = App;
+    return GameService;
+}());
+exports["default"] = new GameService();

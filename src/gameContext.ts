@@ -2,12 +2,12 @@ import React from 'react'
 
 export interface IGameContextProps {
   isInRoom: boolean,
-  setInRoom: (inRoom: boolean) => void 
+  setIsInRoom: (inRoom: boolean) => void 
 }
 
 const defaultState: IGameContextProps = {
   isInRoom: false,
-  setInRoom: () => {}
+  setIsInRoom: () => {}
 }
 
 export default React.createContext(defaultState)

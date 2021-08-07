@@ -18,7 +18,7 @@ function App() {
 
   const gameContextValue: IGameContextProps = {
     isInRoom,
-    setInRoom: setIsInRoom
+    setIsInRoom
   }
   
   return (
