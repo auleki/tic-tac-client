@@ -39,9 +39,11 @@ exports.__esModule = true;
 var react_1 = require("react");
 var JoinRoom_1 = require("./components/JoinRoom");
 var StyledComponents_1 = require("./components/StyledComponents");
+var gameContext_1 = require("./gameContext");
 var socketService_1 = require("./services/socketService");
 function App() {
     var _this = this;
+    var _a = react_1.useState(false), isInRoom = _a[0], setIsInRoom = _a[1];
     var connectSocket = function () { return __awaiter(_this, void 0, void 0, function () {
         var server;
         return __generator(this, function (_a) {
@@ -56,8 +58,13 @@ function App() {
     react_1.useEffect(function () {
         connectSocket();
     }, []);
-    return (react_1["default"].createElement(StyledComponents_1.AppContainer, null,
-        react_1["default"].createElement("h1", null, "Tic Tac Toe - Fuckers"),
-        react_1["default"].createElement(JoinRoom_1["default"], null)));
+    var gameContextValue = {
+        isInRoom: isInRoom,
+        setInRoom: setIsInRoom
+    };
+    return (react_1["default"].createElement(gameContext_1["default"].Provider, { value: gameContextValue },
+        react_1["default"].createElement(StyledComponents_1.AppContainer, null,
+            react_1["default"].createElement("h1", null, "Tic Tac Toe - Fuckers"),
+            react_1["default"].createElement(JoinRoom_1["default"], null))));
 }
 exports["default"] = App;

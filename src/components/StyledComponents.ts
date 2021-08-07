@@ -60,20 +60,13 @@ export const Button = styled.button(
     transition: 250ms ease-in;
     border: 3px solid transparent;
     outline: none;
-
-    &:hover {
-      border-color: whitesmoke;
-    }
-
+    
     &:hover, &:focus {
       background: #ddd;
       color: crimson;
+      border-color: whitesmoke;
       border-bottom-right-radius: 5px;
       border-bottom-left-radius: 5px;
-    }
-
-    &:focus {
-      border-color: crimson;
     }
  `
 )
