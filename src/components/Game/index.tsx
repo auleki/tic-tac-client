@@ -29,6 +29,7 @@ export function Game () {
     }
     if (socketService.socket) 
       gameService.UpdateGame(socketService.socket, newMatrix)
+      setPlayerTurn(false)
   }
 
   const handleGameUpdate = () => {
@@ -53,11 +54,13 @@ export function Game () {
 
   useEffect(() => {
     handleGameUpdate()
+    handleGameStart()
   }, [])
   
   return (
     <GameContainer>
-      {!isPlayerTurn && <PlayStopper />}
+      {!isGameStarted && <h3>Waiting for second player to join...</h3>}
+      {(!isGameStarted ||!isPlayerTurn) && <PlayStopper />}
       {matrix.map((row, rowIdx) => {
         return <RowContainer>
           {row.map((column, columnIdx) => (
