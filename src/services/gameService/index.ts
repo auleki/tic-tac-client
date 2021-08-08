@@ -22,12 +22,13 @@ class GameService {
     socket.on("start_game", listener)
   }
 
-  public async GameWin(socket: Socket, message: string) {
+  // find the reason why using a socket type throws an error with Game:84
+  public async GameWin(socket: any, message: string) {
     socket.emit("game_win", { message })
   }
 
   public async OnGameWin(socket: Socket, listener: (message: string ) => void) {
-    socket.on("game_win", ({ message }) => listener(message))
+    socket.on("on_game_win", ({ message }) => listener(message))
   }
 }
 

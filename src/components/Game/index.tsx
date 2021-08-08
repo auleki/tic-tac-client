@@ -28,10 +28,10 @@ export function Game () {
       }
 
       if (row.every(value => value && value === playerSymbol)) {
-        alert("You won")
+        // alert("You won")
         return [true, false]
       } else if (row.every(value => value && value !== playerSymbol)) {
-        alert("You lost")
+        // alert("You lost")
         return [false, true]
       }
     }
@@ -43,10 +43,10 @@ export function Game () {
       }
 
       if (column.every(value => value && value === playerSymbol)) {
-        alert("You won")
+        // alert("You won")
         return [true, false]
       } else if (column.every(value => value && value !== playerSymbol)) {
-        alert("You lost")
+        // alert("You lost")
         return [false, true]
       }
     }
@@ -64,8 +64,10 @@ export function Game () {
     }
 
     if (matrix.every(m => m.every(v => v !== null))) {
-      alert('Tie')
+      // alert('Tie')
+      return [true, true]
     }
+    return [false, false]
   }
   
   const updateGame = (column: number, row: number, symbol: "x" | "o") => {
@@ -76,11 +78,17 @@ export function Game () {
       setMatrix(newMatrix)
     }
     if (socketService.socket) 
-      gameService.UpdateGame(socketService.socket, newMatrix)
+    gameService.UpdateGame(socketService.socket, newMatrix)
+    const [currentPlayerWon, otherPlayerWon] = checkGameState(newMatrix)
+    if(currentPlayerWon && otherPlayerWon) {
+        gameService.GameWin(socketService.socket, "Game is a Tie!")
+        alert("Game is a TIE!")
+      } else if (currentPlayerWon && !otherPlayerWon) {
+        gameService.GameWin(socketService.socket, "You Lost!")
+      }
       setPlayerTurn(false)
-      checkGameState(newMatrix)
   }
-
+  
   const handleGameUpdate = () => {
     if(socketService.socket) 
       gameService.OnGameUpdate(socketService.socket, (newMatrix) => {
@@ -114,13 +122,9 @@ export function Game () {
   useEffect(() => {
     handleGameUpdate()
     handleGameStart()
+    handleGameWin()
   }, [])
 
-  // useEffect(() => {
-  //   checkGameState(matrix)
-  // }, [matrix])
-
-  
   return (
     <GameContainer>
       {!isGameStarted && <h3>Waiting for second player to join...</h3>}

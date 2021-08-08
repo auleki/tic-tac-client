@@ -27,11 +27,11 @@ function Game() {
                 row.push(matrix[i][j]);
             }
             if (row.every(function (value) { return value && value === playerSymbol; })) {
-                alert("You won");
+                // alert("You won")
                 return [true, false];
             }
             else if (row.every(function (value) { return value && value !== playerSymbol; })) {
-                alert("You lost");
+                // alert("You lost")
                 return [false, true];
             }
         }
@@ -41,11 +41,11 @@ function Game() {
                 column.push(matrix[j][i]);
             }
             if (column.every(function (value) { return value && value === playerSymbol; })) {
-                alert("You won");
+                // alert("You won")
                 return [true, false];
             }
             else if (column.every(function (value) { return value && value !== playerSymbol; })) {
-                alert("You lost");
+                // alert("You lost")
                 return [false, true];
             }
         }
@@ -64,8 +64,10 @@ function Game() {
             }
         }
         if (matrix.every(function (m) { return m.every(function (v) { return v !== null; }); })) {
-            alert('Tie');
+            // alert('Tie')
+            return [true, true];
         }
+        return [false, false];
     };
     var updateGame = function (column, row, symbol) {
         var newMatrix = __spreadArrays(matrix);
@@ -75,8 +77,15 @@ function Game() {
         }
         if (socketService_1["default"].socket)
             gameService_1["default"].UpdateGame(socketService_1["default"].socket, newMatrix);
+        var _a = checkGameState(newMatrix), currentPlayerWon = _a[0], otherPlayerWon = _a[1];
+        if (currentPlayerWon && otherPlayerWon) {
+            gameService_1["default"].GameWin(socketService_1["default"].socket, "Game is a Tie!");
+            alert("Game is a TIE!");
+        }
+        else if (currentPlayerWon && !otherPlayerWon) {
+            gameService_1["default"].GameWin(socketService_1["default"].socket, "You Lost!");
+        }
         setPlayerTurn(false);
-        checkGameState(newMatrix);
     };
     var handleGameUpdate = function () {
         if (socketService_1["default"].socket)
@@ -108,10 +117,8 @@ function Game() {
     react_1.useEffect(function () {
         handleGameUpdate();
         handleGameStart();
+        handleGameWin();
     }, []);
-    // useEffect(() => {
-    //   checkGameState(matrix)
-    // }, [matrix])
     return (React.createElement(StyledComponents_1.GameContainer, null,
         !isGameStarted && React.createElement("h3", null, "Waiting for second player to join..."),
         (!isGameStarted || !isPlayerTurn) && React.createElement(StyledComponents_1.PlayStopper, null),

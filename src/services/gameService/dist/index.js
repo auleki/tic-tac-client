@@ -80,6 +80,7 @@ var GameService = /** @class */ (function () {
             });
         });
     };
+    // find the reason why using a socket type throws an error with Game:84
     GameService.prototype.GameWin = function (socket, message) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -91,7 +92,7 @@ var GameService = /** @class */ (function () {
     GameService.prototype.OnGameWin = function (socket, listener) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                socket.on("game_win", function (_a) {
+                socket.on("on_game_win", function (_a) {
                     var message = _a.message;
                     return listener(message);
                 });
