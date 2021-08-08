@@ -5,6 +5,8 @@ var defaultState = {
     isInRoom: false,
     setIsInRoom: function () { },
     playerSymbol: "o",
-    setPlayerSymbol: function () { }
+    setPlayerSymbol: function () { },
+    isPlayerTurn: false,
+    setPlayerTurn: function () { }
 };
 exports["default"] = react_1["default"].createContext(defaultState);

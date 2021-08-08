@@ -46,6 +46,7 @@ function App() {
     var _this = this;
     var _a = react_1.useState(false), isInRoom = _a[0], setIsInRoom = _a[1];
     var _b = react_1.useState("o"), playerSymbol = _b[0], setPlayerSymbol = _b[1];
+    var _c = react_1.useState(false), isPlayerTurn = _c[0], setPlayerTurn = _c[1];
     var connectSocket = function () { return __awaiter(_this, void 0, void 0, function () {
         var server;
         return __generator(this, function (_a) {
@@ -64,7 +65,9 @@ function App() {
         isInRoom: isInRoom,
         setIsInRoom: setIsInRoom,
         playerSymbol: playerSymbol,
-        setPlayerSymbol: setPlayerSymbol
+        setPlayerSymbol: setPlayerSymbol,
+        isPlayerTurn: isPlayerTurn,
+        setPlayerTurn: setPlayerTurn
     };
     return (react_1["default"].createElement(gameContext_1["default"].Provider, { value: gameContextValue },
         react_1["default"].createElement(StyledComponents_1.AppContainer, null,

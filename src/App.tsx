@@ -8,6 +8,7 @@ import socketService from './services/socketService';
 function App() {
   const [isInRoom, setIsInRoom] = useState(false)
   const [playerSymbol, setPlayerSymbol] = useState<"x" | "o">("o")
+  const [isPlayerTurn, setPlayerTurn] = useState(false)
 
   const connectSocket = async () => {
     // eslint-disable-next-line
@@ -22,7 +23,9 @@ function App() {
     isInRoom,
     setIsInRoom,
     playerSymbol,
-    setPlayerSymbol
+    setPlayerSymbol,
+    isPlayerTurn, 
+    setPlayerTurn
   }
   
   return (

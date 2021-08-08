@@ -3,7 +3,7 @@ import gameContext from "../../gameContext";
 import gameService from "../../services/gameService";
 import socketService from "../../services/socketService";
 
-import { RowContainer, GameContainer, Cell, X, O } from "../StyledComponents";
+import { RowContainer, GameContainer, Cell, X, O, PlayStopper } from "../StyledComponents";
 
 export type IPlayerMatrix = Array<Array<string | null>>
 
@@ -14,7 +14,7 @@ export function Game () {
     [null, null, null],
   ])
 
-  const { playerSymbol  } = useContext(gameContext)
+  const { playerSymbol, isPlayerTurn, setPlayerTurn, setPlayerSymbol  } = useContext(gameContext)
   
   const updateGame = (column: number, row: number, symbol: "x" | "o") => {
     const newMatrix = [...matrix]
@@ -31,6 +31,7 @@ export function Game () {
     if(socketService.socket) 
       gameService.OnGameUpdate(socketService.socket, (newMatrix) => {
         setMatrix(newMatrix)
+        setPlayerTurn(true)
       })
   }
 
@@ -40,6 +41,7 @@ export function Game () {
   
   return (
     <GameContainer>
+      {!isPlayerTurn && <PlayStopper />}
       {matrix.map((row, rowIdx) => {
         return <RowContainer>
           {row.map((column, columnIdx) => (
