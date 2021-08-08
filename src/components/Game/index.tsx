@@ -19,6 +19,54 @@ export function Game () {
   ])
 
   const { playerSymbol, isPlayerTurn, setPlayerTurn, setPlayerSymbol, isGameStarted, setIsGameStarted  } = useContext(gameContext)
+
+  const checkGameState = (matrix: IPlayerMatrix) => {
+    for (let i = 0; i < matrix.length; i++) {
+      let row = []
+      for (let j = 0; j < matrix.length; j++) {
+        row.push(matrix[i][j])
+      }
+
+      if (row.every(value => value && value === playerSymbol)) {
+        alert("You won")
+        return [true, false]
+      } else if (row.every(value => value && value !== playerSymbol)) {
+        alert("You lost")
+        return [false, true]
+      }
+    }
+
+    for (let i = 0; i < matrix.length; i++) {
+      let column = []
+      for (let j = 0; j < matrix.length; j++) {
+        column.push(matrix[j][i])
+      }
+
+      if (column.every(value => value && value === playerSymbol)) {
+        alert("You won")
+        return [true, false]
+      } else if (column.every(value => value && value !== playerSymbol)) {
+        alert("You lost")
+        return [false, true]
+      }
+    }
+
+    if (matrix[1][1]) {
+      if (matrix[0][0] === matrix[1][1] && matrix[2][2] === matrix[1][1]) {
+        if (matrix[1][1] === playerSymbol) return [true, false]
+        else return [false, true]
+      }
+
+      if (matrix[2][0] === matrix[1][1] && matrix[0][2] === matrix[1][1]) {
+        if (matrix[1][1] === playerSymbol) return [true, false]
+        else return [false, true]
+      }
+    }
+
+    if (matrix.every(m => m.every(v => v !== null))) {
+      alert('Tie')
+    }
+  }
   
   const updateGame = (column: number, row: number, symbol: "x" | "o") => {
     const newMatrix = [...matrix]
@@ -56,6 +104,11 @@ export function Game () {
     handleGameUpdate()
     handleGameStart()
   }, [])
+
+  useEffect(() => {
+    checkGameState(matrix)
+  }, [matrix])
+
   
   return (
     <GameContainer>

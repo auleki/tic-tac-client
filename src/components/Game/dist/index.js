@@ -20,6 +20,53 @@ function Game() {
         [null, null, null],
     ]), matrix = _a[0], setMatrix = _a[1];
     var _b = react_1.useContext(gameContext_1["default"]), playerSymbol = _b.playerSymbol, isPlayerTurn = _b.isPlayerTurn, setPlayerTurn = _b.setPlayerTurn, setPlayerSymbol = _b.setPlayerSymbol, isGameStarted = _b.isGameStarted, setIsGameStarted = _b.setIsGameStarted;
+    var checkGameState = function (matrix) {
+        for (var i = 0; i < matrix.length; i++) {
+            var row = [];
+            for (var j = 0; j < matrix.length; j++) {
+                row.push(matrix[i][j]);
+            }
+            if (row.every(function (value) { return value && value === playerSymbol; })) {
+                alert("You won");
+                return [true, false];
+            }
+            else if (row.every(function (value) { return value && value !== playerSymbol; })) {
+                alert("You lost");
+                return [false, true];
+            }
+        }
+        for (var i = 0; i < matrix.length; i++) {
+            var column = [];
+            for (var j = 0; j < matrix.length; j++) {
+                column.push(matrix[j][i]);
+            }
+            if (column.every(function (value) { return value && value === playerSymbol; })) {
+                alert("You won");
+                return [true, false];
+            }
+            else if (column.every(function (value) { return value && value !== playerSymbol; })) {
+                alert("You lost");
+                return [false, true];
+            }
+        }
+        if (matrix[1][1]) {
+            if (matrix[0][0] === matrix[1][1] && matrix[2][2] === matrix[1][1]) {
+                if (matrix[1][1] === playerSymbol)
+                    return [true, false];
+                else
+                    return [false, true];
+            }
+            if (matrix[2][0] === matrix[1][1] && matrix[0][2] === matrix[1][1]) {
+                if (matrix[1][1] === playerSymbol)
+                    return [true, false];
+                else
+                    return [false, true];
+            }
+        }
+        if (matrix.every(function (m) { return m.every(function (v) { return v !== null; }); })) {
+            alert('Tie');
+        }
+    };
     var updateGame = function (column, row, symbol) {
         var newMatrix = __spreadArrays(matrix);
         if (newMatrix[row][column] === null || newMatrix[row][column] === 'null') {
@@ -52,6 +99,9 @@ function Game() {
         handleGameUpdate();
         handleGameStart();
     }, []);
+    react_1.useEffect(function () {
+        checkGameState(matrix);
+    }, [matrix]);
     return (React.createElement(StyledComponents_1.GameContainer, null,
         !isGameStarted && React.createElement("h3", null, "Waiting for second player to join..."),
         (!isGameStarted || !isPlayerTurn) && React.createElement(StyledComponents_1.PlayStopper, null),
