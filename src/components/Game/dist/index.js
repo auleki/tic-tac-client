@@ -76,12 +76,14 @@ function Game() {
         if (socketService_1["default"].socket)
             gameService_1["default"].UpdateGame(socketService_1["default"].socket, newMatrix);
         setPlayerTurn(false);
+        checkGameState(newMatrix);
     };
     var handleGameUpdate = function () {
         if (socketService_1["default"].socket)
             gameService_1["default"].OnGameUpdate(socketService_1["default"].socket, function (newMatrix) {
                 setMatrix(newMatrix);
                 setPlayerTurn(true);
+                checkGameState(newMatrix);
             });
     };
     var handleGameStart = function () {
@@ -95,13 +97,21 @@ function Game() {
                     setPlayerTurn(false);
             });
     };
+    var handleGameWin = function () {
+        if (socketService_1["default"].socket) {
+            gameService_1["default"].OnGameWin(socketService_1["default"].socket, function (message) {
+                setPlayerTurn(false);
+                alert(message);
+            });
+        }
+    };
     react_1.useEffect(function () {
         handleGameUpdate();
         handleGameStart();
     }, []);
-    react_1.useEffect(function () {
-        checkGameState(matrix);
-    }, [matrix]);
+    // useEffect(() => {
+    //   checkGameState(matrix)
+    // }, [matrix])
     return (React.createElement(StyledComponents_1.GameContainer, null,
         !isGameStarted && React.createElement("h3", null, "Waiting for second player to join..."),
         (!isGameStarted || !isPlayerTurn) && React.createElement(StyledComponents_1.PlayStopper, null),

@@ -78,6 +78,7 @@ export function Game () {
     if (socketService.socket) 
       gameService.UpdateGame(socketService.socket, newMatrix)
       setPlayerTurn(false)
+      checkGameState(newMatrix)
   }
 
   const handleGameUpdate = () => {
@@ -85,6 +86,7 @@ export function Game () {
       gameService.OnGameUpdate(socketService.socket, (newMatrix) => {
         setMatrix(newMatrix)
         setPlayerTurn(true)
+        checkGameState(newMatrix)
       })
   }
 
@@ -100,14 +102,23 @@ export function Game () {
       })
   }
 
+  const handleGameWin = () => {
+    if(socketService.socket) {
+      gameService.OnGameWin(socketService.socket, (message) => {
+        setPlayerTurn(false)
+        alert(message)
+      })
+    }
+  }
+
   useEffect(() => {
     handleGameUpdate()
     handleGameStart()
   }, [])
 
-  useEffect(() => {
-    checkGameState(matrix)
-  }, [matrix])
+  // useEffect(() => {
+  //   checkGameState(matrix)
+  // }, [matrix])
 
   
   return (
