@@ -72,6 +72,14 @@ var GameService = /** @class */ (function () {
             });
         });
     };
+    GameService.prototype.OnStartGame = function (socket, listener) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                socket.on("start_game", listener);
+                return [2 /*return*/];
+            });
+        });
+    };
     return GameService;
 }());
 exports["default"] = new GameService();

@@ -19,7 +19,7 @@ function Game() {
         [null, null, null],
         [null, null, null],
     ]), matrix = _a[0], setMatrix = _a[1];
-    var _b = react_1.useContext(gameContext_1["default"]), playerSymbol = _b.playerSymbol, isPlayerTurn = _b.isPlayerTurn, setPlayerTurn = _b.setPlayerTurn, setPlayerSymbol = _b.setPlayerSymbol;
+    var _b = react_1.useContext(gameContext_1["default"]), playerSymbol = _b.playerSymbol, isPlayerTurn = _b.isPlayerTurn, setPlayerTurn = _b.setPlayerTurn, setPlayerSymbol = _b.setPlayerSymbol, isGameStarted = _b.isGameStarted, setIsGameStarted = _b.setIsGameStarted;
     var updateGame = function (column, row, symbol) {
         var newMatrix = __spreadArrays(matrix);
         if (newMatrix[row][column] === null || newMatrix[row][column] === 'null') {
@@ -34,6 +34,17 @@ function Game() {
             gameService_1["default"].OnGameUpdate(socketService_1["default"].socket, function (newMatrix) {
                 setMatrix(newMatrix);
                 setPlayerTurn(true);
+            });
+    };
+    var handleGameStart = function () {
+        if (socketService_1["default"].socket)
+            gameService_1["default"].OnStartGame(socketService_1["default"].socket, function (options) {
+                setIsGameStarted(true);
+                setPlayerSymbol(options.symbol);
+                if (options.start)
+                    setPlayerTurn(true);
+                else
+                    setPlayerTurn(false);
             });
     };
     react_1.useEffect(function () {

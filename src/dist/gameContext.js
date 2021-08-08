@@ -7,6 +7,8 @@ var defaultState = {
     playerSymbol: "o",
     setPlayerSymbol: function () { },
     isPlayerTurn: false,
-    setPlayerTurn: function () { }
+    setPlayerTurn: function () { },
+    isGameStarted: false,
+    setIsGameStarted: function () { }
 };
 exports["default"] = react_1["default"].createContext(defaultState);

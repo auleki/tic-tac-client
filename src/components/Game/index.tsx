@@ -6,6 +6,10 @@ import socketService from "../../services/socketService";
 import { RowContainer, GameContainer, Cell, X, O, PlayStopper } from "../StyledComponents";
 
 export type IPlayerMatrix = Array<Array<string | null>>
+export interface IStartGame {
+  start: boolean
+  symbol: "x" | "o"
+}
 
 export function Game () {
   const [matrix, setMatrix] = useState<IPlayerMatrix>([
@@ -14,7 +18,7 @@ export function Game () {
     [null, null, null],
   ])
 
-  const { playerSymbol, isPlayerTurn, setPlayerTurn, setPlayerSymbol  } = useContext(gameContext)
+  const { playerSymbol, isPlayerTurn, setPlayerTurn, setPlayerSymbol, isGameStarted, setIsGameStarted  } = useContext(gameContext)
   
   const updateGame = (column: number, row: number, symbol: "x" | "o") => {
     const newMatrix = [...matrix]
@@ -32,6 +36,18 @@ export function Game () {
       gameService.OnGameUpdate(socketService.socket, (newMatrix) => {
         setMatrix(newMatrix)
         setPlayerTurn(true)
+      })
+  }
+
+  const handleGameStart = () => {
+    if(socketService.socket) 
+      gameService.OnStartGame(socketService.socket, (options) => {
+        setIsGameStarted(true)
+        setPlayerSymbol(options.symbol)
+        if(options.start) 
+          setPlayerTurn(true)
+        else 
+          setPlayerTurn(false)
       })
   }
 

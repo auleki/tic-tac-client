@@ -9,6 +9,7 @@ function App() {
   const [isInRoom, setIsInRoom] = useState(false)
   const [playerSymbol, setPlayerSymbol] = useState<"x" | "o">("o")
   const [isPlayerTurn, setPlayerTurn] = useState(false)
+  const [isGameStarted, setIsGameStarted] = useState(false)
 
   const connectSocket = async () => {
     // eslint-disable-next-line
@@ -25,7 +26,9 @@ function App() {
     playerSymbol,
     setPlayerSymbol,
     isPlayerTurn, 
-    setPlayerTurn
+    setPlayerTurn,
+    isGameStarted, 
+    setIsGameStarted
   }
   
   return (

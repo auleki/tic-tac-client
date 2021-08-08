@@ -1,5 +1,5 @@
 import { Socket } from "socket.io-client";
-import { IPlayerMatrix } from "../../components/Game";
+import { IPlayerMatrix, IStartGame } from "../../components/Game";
 
 class GameService {
   public async JoinGameRoom(socket: Socket, roomId: string): Promise<boolean> {
@@ -16,6 +16,10 @@ class GameService {
 
   public async OnGameUpdate(socket: Socket, listener: (matrix: IPlayerMatrix) => void) {
     socket.on("on_game_update", ({ matrix }) => listener(matrix))
+  }
+
+  public async OnStartGame(socket: Socket, listener: (options: IStartGame) => void) {
+    socket.on("start_game", listener)
   }
 }
 
